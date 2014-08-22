@@ -1,7 +1,7 @@
 require "spec_helper"
 require "support/helpers/content_api_helpers"
-require 'config/initializers/services'
-require 'app/models/sector_content'
+require "config/initializers/services"
+require "app/models/sector_content"
 
 RSpec.describe SectorContent do
   include ContentApiHelpers
@@ -20,6 +20,6 @@ RSpec.describe SectorContent do
     expected_title_from_content_api_stub = "Oil and gas: carbon storage public register"
     sector_content = SectorContent.new("oil-and-gas/licensing")
 
-    expect(sector_content.results[1]["title"]).to eq expected_title_from_content_api_stub
+    expect(sector_content.results[1]["title"]).to eq(expected_title_from_content_api_stub)
   end
 end

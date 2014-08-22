@@ -1,5 +1,3 @@
-require "active_support/core_ext/hash/indifferent_access"
-
 class SectorContent
   def initialize(slug)
     content_api = CollectionsAPI.services(:content_api)
