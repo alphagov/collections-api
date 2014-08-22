@@ -19,3 +19,6 @@ end
 
 require 'gds_api/content_store'
 CollectionsAPI.services(:content_store, GdsApi::ContentStore.new(Plek.new.find('content-store')))
+
+require 'gds_api/content_api'
+CollectionsAPI.services(:content_api, GdsApi::ContentApi.new(Plek.new.find('contentapi')))
