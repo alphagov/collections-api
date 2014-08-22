@@ -14,6 +14,9 @@
 # users commonly want.
 #
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
+
+$LOAD_PATH << File.join(File.dirname(__FILE__), '..')
+
 RSpec.configure do |config|
   config.disable_monkey_patching!
   config.expose_dsl_globally = false
