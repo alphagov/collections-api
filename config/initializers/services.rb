@@ -1,7 +1,18 @@
 module CollectionsAPI
   def self.services(name, service = nil)
     @services ||= {}
-    @services[name] = service if service
-    @services[name]
+
+    if service
+      @services[name] = service
+      return true
+    else
+      if @services[name]
+        return @services[name]
+      else
+        raise ServiceNotRegisteredException.new(name)
+      end
+    end
   end
+
+  class ServiceNotRegisteredException < Exception; end
 end
