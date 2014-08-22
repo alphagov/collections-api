@@ -16,3 +16,6 @@ module CollectionsAPI
 
   class ServiceNotRegisteredException < Exception; end
 end
+
+require 'gds_api/content_store'
+CollectionsAPI.services(:content_store, GdsApi::ContentStore.new(Plek.new.find('content-store')))
