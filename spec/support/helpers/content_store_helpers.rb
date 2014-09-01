@@ -1,8 +1,18 @@
-module ContentStoreHelpers
-  def stub_content_store
-    content_store = double(:content_store, content_item: nil)
+require "config/initializers/services"
 
-    allow(content_store).to receive(:content_item).with("/oil-and-gas/offshore").and_return({
+module ContentStoreHelpers
+  def mock_content_store
+    content_store = double(:content_store, content_item: nil)
+    real_content_store = CollectionsAPI.services(:content_store)
+    CollectionsAPI.services(:content_store, content_store)
+
+    yield
+
+    CollectionsAPI.services(:content_store, real_content_store)
+  end
+
+  def stub_content_store_with_content
+    allow(CollectionsAPI.services(:content_store)).to receive(:content_item).with("/oil-and-gas/offshore").and_return({
       "base_path" => "/oil-and-gas/offshore",
       "title" => "Offshore",
       "description" => "Important information about offshore drilling",
@@ -34,7 +44,14 @@ module ContentStoreHelpers
         ]
       }
     })
+  end
+end
 
-    CollectionsAPI.services(:content_store, content_store)
+RSpec.configure do |config|
+  config.include(ContentStoreHelpers, type: :model)
+  config.around(:example, type: :model) do |example|
+    RSpec::Mocks.with_temporary_scope do
+      mock_content_store(&example)
+    end
   end
 end

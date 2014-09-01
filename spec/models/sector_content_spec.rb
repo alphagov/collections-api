@@ -1,25 +1,33 @@
 require "spec_helper"
 require "support/helpers/content_api_helpers"
-require "config/initializers/services"
 require "app/models/sector_content"
 
-RSpec.describe SectorContent do
-  include ContentApiHelpers
+RSpec.describe SectorContent, type: :model do
+  context "when the sector is missing" do
+    it "returns a nil object" do
+      sector_content = SectorContent.find("oil-and-gas/offshore")
 
-  before do
-    stub_content_api
+      expect(sector_content).to be_nil
+    end
   end
 
-  it "holds information about the sector" do
-    sector_content = SectorContent.new("oil-and-gas/licensing")
+  context "when the sector is present" do
+    before do
+      stub_content_api_with_content
+    end
 
-    expect(sector_content.title).to eq("Licensing")
-  end
+    it "retrieves information about the sector" do
+      sector_content = SectorContent.find("oil-and-gas/offshore")
 
-  it "retrieves non curated sector content from the content api" do
-    expected_title_from_content_api_stub = "Oil and gas: carbon storage public register"
-    sector_content = SectorContent.new("oil-and-gas/licensing")
+      expect(sector_content.title).to eq("Offshore")
+      expect(sector_content.parent[:title]).to eq("Oil and gas")
+    end
 
-    expect(sector_content.results[1]["title"]).to eq(expected_title_from_content_api_stub)
+    it "retrieves non curated sector content from the content api" do
+      expected_title_from_content_api_stub = "Oil rig safety requirements"
+      sector_content = SectorContent.find("oil-and-gas/offshore")
+
+      expect(sector_content.results.first["title"]).to eq(expected_title_from_content_api_stub)
+    end
   end
 end

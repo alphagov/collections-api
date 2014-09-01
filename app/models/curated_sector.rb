@@ -2,9 +2,18 @@ require "time"
 require "active_support/core_ext/hash/indifferent_access"
 
 class CuratedSector
-  def initialize(slug)
-    content_store = CollectionsAPI.services(:content_store)
-    @content_item = content_store.content_item("/#{slug}")
+  def self.find(slug)
+    content_item = CollectionsAPI.services(:content_store).content_item("/#{slug}")
+
+    if content_item
+      self.new(content_item)
+    else
+      nil
+    end
+  end
+
+  def initialize(content_item)
+    @content_item = content_item
   end
 
   def title
