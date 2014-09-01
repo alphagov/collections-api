@@ -1,6 +1,4 @@
 require "config/initializers/services"
-require "app/models/sector_content"
-require "app/models/curated_sector"
 
 class SectorPresenter
   def initialize(slug)
@@ -28,14 +26,6 @@ class SectorPresenter
   end
 
 private
-
-  def sector_content
-    @sector_content ||= SectorContent.find(@slug)
-  end
-
-  def curated_sector
-    @curated_sector ||= CuratedSector.find(@slug)
-  end
 
   def groups
     if curated_sector
