@@ -8,7 +8,7 @@ gem 'plek', '1.8.1'
 gem 'airbrake', '4.0.0'
 
 gem 'gds-sso', '9.3.0'
-gem 'gds-api-adapters', '14.1.1'
+gem 'gds-api-adapters', '14.3.0'
 
 gem 'decent_exposure', '2.3.2'
 
