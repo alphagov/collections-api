@@ -18,7 +18,9 @@ class SectorPresenter
       {
         title: sector_content.title,
         parent: sector_content.parent,
-        groups: groups
+        details: {
+          groups: groups
+        }
       }
     end
   end

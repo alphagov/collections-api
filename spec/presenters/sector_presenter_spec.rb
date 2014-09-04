@@ -38,29 +38,31 @@ RSpec.describe SectorPresenter, type: :model do
       expect(presenter).not_to be_empty
       expect(presenter.to_hash).to include(
         title: "Offshore",
-        groups: [
-          {
-            name: "A to Z",
-            contents: [
-              {
-                title: "North Sea shipping lanes",
-                web_url: "https://www.example.com/north-sea-shipping-lanes"
-              },
-              {
-                title: "Oil rig safety requirements",
-                web_url: "https://www.example.com/oil-rig-safety-requirements"
-              },
-              {
-                title: "Oil rig staffing",
-                web_url: "https://www.example.com/oil-rig-staffing"
-              },
-              {
-                title: "Undersea piping restrictions",
-                web_url: "https://www.example.com/undersea-piping-restrictions"
-              }
-            ]
-          }
-        ]
+        details: {
+          groups: [
+            {
+              name: "A to Z",
+              contents: [
+                {
+                  title: "North Sea shipping lanes",
+                  web_url: "https://www.example.com/north-sea-shipping-lanes"
+                },
+                {
+                  title: "Oil rig safety requirements",
+                  web_url: "https://www.example.com/oil-rig-safety-requirements"
+                },
+                {
+                  title: "Oil rig staffing",
+                  web_url: "https://www.example.com/oil-rig-staffing"
+                },
+                {
+                  title: "Undersea piping restrictions",
+                  web_url: "https://www.example.com/undersea-piping-restrictions"
+                }
+              ]
+            }
+          ]
+        }
       )
     end
 
@@ -87,39 +89,41 @@ RSpec.describe SectorPresenter, type: :model do
       expect(presenter).not_to be_empty
       expect(presenter.to_hash).to include({
         title: "Offshore",
-        groups: [
-          {
-            name: "Oil rigs",
-            contents: [
-              {
-                title: "Oil rig safety requirements",
-                web_url: "https://www.example.com/oil-rig-safety-requirements"
-              },
-              {
-                title: "Oil rig staffing",
-                web_url: "https://www.example.com/oil-rig-staffing"
-              }
-            ]
-          },
-          {
-            name: "Piping",
-            contents: [
-              {
-                title: "Undersea piping restrictions",
-                web_url: "https://www.example.com/undersea-piping-restrictions"
-              }
-            ]
-          },
-          {
-            name: "Other",
-            contents: [
-              {
-                title: "North Sea shipping lanes",
-                web_url: "https://www.example.com/north-sea-shipping-lanes"
-              }
-            ]
-          }
-        ]
+        details: {
+          groups: [
+            {
+              name: "Oil rigs",
+              contents: [
+                {
+                  title: "Oil rig safety requirements",
+                  web_url: "https://www.example.com/oil-rig-safety-requirements"
+                },
+                {
+                  title: "Oil rig staffing",
+                  web_url: "https://www.example.com/oil-rig-staffing"
+                }
+              ]
+            },
+            {
+              name: "Piping",
+              contents: [
+                {
+                  title: "Undersea piping restrictions",
+                  web_url: "https://www.example.com/undersea-piping-restrictions"
+                }
+              ]
+            },
+            {
+              name: "Other",
+              contents: [
+                {
+                  title: "North Sea shipping lanes",
+                  web_url: "https://www.example.com/north-sea-shipping-lanes"
+                }
+              ]
+            }
+          ]
+        }
       })
     end
 

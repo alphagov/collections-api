@@ -31,7 +31,7 @@ RSpec.describe "Requests for specialist sectors", type: :request do
 
       expect(response.status).to eq(200)
       expect(JSON.parse(response.body)["title"]).to eq("Offshore")
-      expect(JSON.parse(response.body)).to include(
+      expect(JSON.parse(response.body)["details"]).to include(
         "groups" => [
           "name" => "A to Z",
           "contents" => [
@@ -80,7 +80,7 @@ RSpec.describe "Requests for specialist sectors", type: :request do
       get_specialist_sector "oil-and-gas/offshore"
 
       expect(response.status).to eq(200)
-      expect(JSON.parse(response.body)).to include(
+      expect(JSON.parse(response.body)["details"]).to include(
         "groups" => [
           "name" => "A test group",
           "contents" => [
