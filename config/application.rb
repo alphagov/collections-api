@@ -24,3 +24,5 @@ module CollectionsAPI
     # config.i18n.default_locale = :de
   end
 end
+
+$LOAD_PATH << Rails.root
