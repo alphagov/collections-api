@@ -32,7 +32,8 @@ module ContentStoreHelpers
           {
             "name" => "Piping",
             "contents" => [
-              "http://example.com/api/undersea-piping-restrictions.json"
+              "http://example.com/api/undersea-piping-restrictions.json",
+              "http://example.com/api/an-untagged-document-about-oil.json"
             ]
           },
           {
