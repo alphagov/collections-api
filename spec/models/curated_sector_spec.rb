@@ -36,7 +36,8 @@ RSpec.describe CuratedSector, type: :model do
             "http://example.com/api/oil-rig-staffing.json"
           ],
           [
-            "http://example.com/api/undersea-piping-restrictions.json"
+            "http://example.com/api/undersea-piping-restrictions.json",
+            "http://example.com/api/an-untagged-document-about-oil.json"
           ],
           [
             "http://example.com/api/north-sea-shipping-lanes.json"

@@ -69,14 +69,7 @@ private
     curated_sector.groups.map do |group|
       {
         name: group[:name],
-        contents: group[:contents].map { |api_url|
-          content = find_content(api_url)
-
-          {
-            title: content[:title],
-            web_url: content[:web_url]
-          }
-        }
+        contents: inflated_content(group[:contents])
       }
     end
   end
@@ -85,5 +78,20 @@ private
     sector_content.results.find do |content|
       content[:id] == api_url
     end
+  end
+
+  def inflated_content(api_urls)
+    inflated = []
+
+    api_urls.each do |api_url|
+      if (content = find_content(api_url))
+        inflated << {
+          title: content[:title],
+          web_url: content[:web_url]
+        }
+      end
+    end
+
+    inflated
   end
 end
