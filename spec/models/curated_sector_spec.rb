@@ -29,7 +29,7 @@ RSpec.describe CuratedSector, type: :model do
       it "provides the ordered groups hash (with indifferent access)" do
         sector = CuratedSector.find("oil-and-gas/offshore")
 
-        expect(sector.groups.map {|g| g[:name] }).to eq(["Oil rigs", "Piping", "Other"])
+        expect(sector.groups.map {|g| g[:name] }).to eq(["Oil rigs", "Piping", "A group with only untagged content", "Other"])
         expect(sector.groups.map {|g| g[:contents] }).to eq([
           [
             "http://example.com/api/oil-rig-safety-requirements.json",
@@ -37,6 +37,9 @@ RSpec.describe CuratedSector, type: :model do
           ],
           [
             "http://example.com/api/undersea-piping-restrictions.json",
+            "http://example.com/api/an-untagged-document-about-oil.json"
+          ],
+          [
             "http://example.com/api/an-untagged-document-about-oil.json"
           ],
           [

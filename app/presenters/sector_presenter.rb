@@ -41,7 +41,7 @@ private
 
   def groups
     if curated_sector
-      inflated_groups
+      filtered_groups
     else
       a_to_z_group
     end
@@ -63,6 +63,12 @@ private
         }
       }
     ]
+  end
+
+  def filtered_groups
+    inflated_groups.reject do |group|
+      group[:contents].empty?
+    end
   end
 
   def inflated_groups
