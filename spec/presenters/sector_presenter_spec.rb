@@ -83,7 +83,7 @@ RSpec.describe SectorPresenter, type: :model do
       stub_content_store_with_content
     end
 
-    it "returns grouped content inflated with title and web URL, removing untagged content" do
+    it "returns grouped content inflated with title and web URL" do
       presenter = SectorPresenter.new("oil-and-gas/offshore")
 
       expect(presenter).not_to be_empty
@@ -140,11 +140,24 @@ RSpec.describe SectorPresenter, type: :model do
     it "removes content which has been untagged" do
       presenter = SectorPresenter.new("oil-and-gas/offshore")
 
-      piping_group = presenter.to_hash[:details][:groups].find {|g| g[:name] == "Piping" }
+      piping_group = find_group(presenter, "Piping")
+
       expect(piping_group[:contents]).to eq([{
         title: "Undersea piping restrictions",
         web_url: "https://www.example.com/undersea-piping-restrictions"
       }])
     end
+
+    it "removes groups where all the content has been untagged" do
+      presenter = SectorPresenter.new("oil-and-gas/offshore")
+
+      untagged_group = find_group(presenter, "A group with only untagged content")
+
+      expect(untagged_group).to be_nil
+    end
+  end
+
+  def find_group(presenter, name)
+    presenter.to_hash[:details][:groups].find {|g| g[:name] == name }
   end
 end

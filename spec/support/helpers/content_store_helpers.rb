@@ -37,6 +37,12 @@ module ContentStoreHelpers
             ]
           },
           {
+            "name" => "A group with only untagged content",
+            "contents" => [
+              "http://example.com/api/an-untagged-document-about-oil.json"
+            ]
+          },
+          {
             "name" => "Other",
             "contents" => [
               "http://example.com/api/north-sea-shipping-lanes.json"
