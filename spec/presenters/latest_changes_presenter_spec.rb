@@ -24,30 +24,46 @@ RSpec.describe LatestChangesPresenter, "#to_json" do
         },
       ]
     }
-    rummager_double = double("rummager")
-    allow(CollectionsAPI).to receive(:services).with(:rummager).and_return(rummager_double)
-    allow(rummager_double).to receive(:unified_search).and_return(rummager_results)
+    rummager_double = double("rummager", unified_search: rummager_results)
+    rummager = CollectionsAPI.services(:rummager, rummager_double)
     slug = "oil-and-gas/fields-and-wells"
+
     presenter = LatestChangesPresenter.new(slug)
 
-    expect(presenter.to_json).to eq presenter.to_hash.to_json
+    expect(presenter.to_json).to eq(presenter.to_hash.to_json)
   end
 
   context "empty result set" do
-
     it "for an empty slug the presenter will return empty json" do
       rummager_results = { "results" => [] }
-      rummager_double = double("rummager")
-      allow(CollectionsAPI).to receive(:services).with(:rummager).and_return(rummager_double)
-      allow(rummager_double).to receive(:unified_search).and_return(rummager_results)
+      rummager_double = double("rummager", unified_search: rummager_results)
+      rummager = CollectionsAPI.services(:rummager, rummager_double)
       slug = ""
 
       presenter = LatestChangesPresenter.new(slug)
 
-
       expect(presenter.to_json).to eq("{}")
     end
+  end
+end
 
+RSpec.describe LatestChangesPresenter, "#empty?" do
+  it "returns true if the are no latest changes" do
+    rummager_double = double("rummager", unified_search: nil)
+    rummager = CollectionsAPI.services(:rummager, rummager_double)
+
+    presenter = LatestChangesPresenter.new("")
+
+    expect(presenter.empty?).to eq(true)
   end
 
+  it "returns true if rummager returns an empty array" do
+    rummager_results = { "results" => [] }
+    rummager_double = double("rummager", unified_search: rummager_results)
+    rummager = CollectionsAPI.services(:rummager, rummager_double)
+
+    presenter = LatestChangesPresenter.new("")
+
+    expect(presenter.empty?).to eq(true)
+  end
 end

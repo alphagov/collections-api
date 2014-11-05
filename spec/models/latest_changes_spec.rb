@@ -1,16 +1,17 @@
 require "spec_helper"
 require "config/initializers/services"
-require "app/models/latest_changes_content"
+require "app/models/latest_changes"
 
-RSpec.describe LatestChangesContent, type: :model do
-  describe "#find" do
+RSpec.describe LatestChanges, type: :model do
+  describe ".find" do
     context "with an empty rummager result set" do
       it "returns an empty results array" do
         rummager = double("rummager", unified_search: { "results" => [] })
         CollectionsAPI.services(:rummager, rummager)
-        latest_content = LatestChangesContent.find("topic_search")
 
-        expect(latest_content.results).to eq []
+        latest_content = LatestChanges.find("topic_search")
+
+        expect(latest_content.results).to eq([])
       end
     end
 
@@ -19,7 +20,7 @@ RSpec.describe LatestChangesContent, type: :model do
         rummager = double("rummager", unified_search: nil)
         CollectionsAPI.services(:rummager, rummager)
 
-        expect(LatestChangesContent.find("topic_search")).to eq nil
+        expect(LatestChanges.find("topic_search")).to eq(nil)
       end
     end
 
@@ -34,9 +35,10 @@ RSpec.describe LatestChangesContent, type: :model do
         }
         rummager = double("rummager", unified_search: rummager_results)
         CollectionsAPI.services(:rummager, rummager)
-        latest_content = LatestChangesContent.find("topic_search")
 
-        expect(latest_content.results[0]["title"]).to eq "Revenue and Customs Briefs"
+        latest_content = LatestChanges.find("topic_search")
+
+        expect(latest_content.results[0]["title"]).to eq("Revenue and Customs Briefs")
       end
     end
 
@@ -53,7 +55,7 @@ RSpec.describe LatestChangesContent, type: :model do
 
       expect(rummager).to receive(:unified_search).with(query)
 
-      LatestChangesContent.find(slug)
+      LatestChanges.find(slug)
     end
   end
 end

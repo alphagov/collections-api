@@ -24,4 +24,4 @@ require 'gds_api/content_api'
 CollectionsAPI.services(:content_api, GdsApi::ContentApi.new(Plek.new.find('contentapi')))
 
 require 'gds_api/rummager'
-CollectionsAPI.services(:rummager, GdsApi::Rummager.new(Plek.new.find('rummager')))
+CollectionsAPI.services(:rummager, GdsApi::Rummager.new(Plek.new.find('search')))

@@ -1,7 +1,6 @@
 require "active_support/core_ext/hash/indifferent_access"
 
-class LatestChangesContent
-
+class LatestChanges
   def self.find(slug)
     search_client = CollectionsAPI.services(:rummager)
     search_query = build_search_query_for(slug)

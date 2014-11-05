@@ -1,5 +1,5 @@
 require "config/initializers/services"
-require "app/models/latest_changes_content"
+require "app/models/latest_changes"
 
 class LatestChangesPresenter
   def initialize(slug)
@@ -16,17 +16,16 @@ class LatestChangesPresenter
     else
       latest_changes_content.results.map do |result|
         {
-          details:
-            {
-              documents: [
-                {
-                  latest_change_note: result[:latest_change_note],
-                  link: result[:link],
-                  timestamp: result[:public_timestamp],
-                  title: result[:title],
-                }
-              ]
-            }
+          details: {
+            documents: [
+              {
+                latest_change_note: result[:latest_change_note],
+                link: result[:link],
+                timestamp: result[:public_timestamp],
+                title: result[:title],
+              }
+            ]
+          }
         }
       end
     end
@@ -41,6 +40,6 @@ private
   attr_reader :slug
 
   def latest_changes_content
-    @_latest_changes_content ||= LatestChangesContent.find(slug)
+    @_latest_changes_content ||= LatestChanges.find(slug)
   end
 end

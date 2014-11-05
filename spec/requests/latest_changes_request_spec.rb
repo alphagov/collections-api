@@ -24,28 +24,25 @@ RSpec.describe "Latest change notes for subtopic", type: :request do
         },
       ]
     }
-
     subtopic = "oil-and-gas/fields-and-wells"
     rummager_double = double("rummager")
-
     allow(CollectionsAPI).to receive(:services).with(:rummager).and_return(rummager_double)
     allow(rummager_double).to receive(:unified_search).and_return(rummager_results)
 
     get "specialist-sectors/#{subtopic}/latest-changes"
 
-    expect(response.status).to eq 200
+    expect(response.status).to eq(200)
   end
 
   it "returns a 404" do
     subtopic = "oil-and-gas/fields-and-wells"
     rummager_double = double("rummager")
-
     allow(CollectionsAPI).to receive(:services).with(:rummager).and_return(rummager_double)
     allow(rummager_double).to receive(:unified_search).and_return({ results: [] })
 
     get "specialist-sectors/#{subtopic}/latest-changes"
 
-    expect(response.body).to eq "{}"
+    expect(response.body).to eq("{}")
     expect(response.status).to eq(404)
   end
 end
