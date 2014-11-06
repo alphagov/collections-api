@@ -9,7 +9,7 @@ class SectorPresenter
   end
 
   def empty?
-    sector_content.nil? && (latest_changes_content.nil? || latest_changes_content.results.empty?)
+    no_sector_content? && no_latest_changes?
   end
 
   def to_hash
@@ -45,15 +45,27 @@ private
     @latest_changes_content ||= LatestChanges.find(@slug)
   end
 
+  def no_latest_changes?
+    latest_changes_content.nil? || latest_changes_content.results.empty?
+  end
+
+  def no_sector_content?
+    sector_content.nil?
+  end
+
   def documents
     latest_changes_content.results.map do |result|
       {
         latest_change_note: result[:latest_change_note],
-        link: result[:link],
+        link: full_url(result[:link]),
         public_updated_at: result[:public_timestamp],
         title: result[:title],
       }
     end
+  end
+
+  def full_url(link)
+    Plek.new.website_root+link
   end
 
   def groups

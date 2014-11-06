@@ -6,6 +6,8 @@ require "active_support/core_ext/hash/keys"
 require "app/presenters/sector_presenter"
 
 RSpec.describe SectorPresenter, type: :model do
+  let(:website_root){ Plek.new.website_root }
+
   describe "#to_json" do
     it "produces the JSON version of #to_hash" do
       stub_content_api_with_content
@@ -67,7 +69,7 @@ RSpec.describe SectorPresenter, type: :model do
           documents: [
             {
               latest_change_note: "This has changed",
-              link: "/government/collections/north-sea-shipping-lanes",
+              link: "#{website_root}/government/collections/north-sea-shipping-lanes",
               public_updated_at: "2014-10-16T10:31:28+01:00",
               title: "North Sea shipping lanes",
             }
@@ -137,7 +139,7 @@ RSpec.describe SectorPresenter, type: :model do
           documents: [
             {
               latest_change_note: "This has changed",
-              link: "/government/collections/north-sea-shipping-lanes",
+              link: "#{website_root}/government/collections/north-sea-shipping-lanes",
               public_updated_at: "2014-10-16T10:31:28+01:00",
               title: "North Sea shipping lanes",
             }
@@ -197,7 +199,7 @@ RSpec.describe SectorPresenter, type: :model do
           documents: [
             {
               latest_change_note: "This has changed",
-              link: "/government/collections/north-sea-shipping-lanes",
+              link: "#{website_root}/government/collections/north-sea-shipping-lanes",
               public_updated_at: "2014-10-16T10:31:28+01:00",
               title: "North Sea shipping lanes",
             }

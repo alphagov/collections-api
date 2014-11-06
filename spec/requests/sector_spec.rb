@@ -8,6 +8,8 @@ RSpec.describe "Requests for specialist sectors", type: :request do
   include GdsApi::TestHelpers::ContentStore
   include GdsApi::TestHelpers::Rummager
 
+  let(:website_root){ Plek.new.website_root }
+
   context "with a missing sector" do
     before do
       stub_rummager_without_content
@@ -82,7 +84,6 @@ RSpec.describe "Requests for specialist sectors", type: :request do
     end
 
     it "returns all sector content grouped" do
-
       get_specialist_sector "oil-and-gas/offshore"
 
       expect(response.status).to eq(200)
@@ -115,15 +116,7 @@ RSpec.describe "Requests for specialist sectors", type: :request do
         description: "Offshore drilling and exploration",
         public_updated_at: 10.days.ago.iso8601,
         details: {
-          groups: [
-            {
-              name: "A test group",
-              contents: [
-                "#{Plek.current.find("contentapi")}/zzzz-content.json",
-                "#{Plek.current.find("contentapi")}/some-content.json"
-              ]
-            }
-          ]
+          groups: []
         }
       })
     end
@@ -134,7 +127,7 @@ RSpec.describe "Requests for specialist sectors", type: :request do
       expect(response.status).to eq(200)
       expect(JSON.parse(response.body)["details"]["documents"]).to include(
         { "latest_change_note" => "This has changed",
-          "link" => "/government/collections/north-sea-shipping-lanes",
+          "link" => "#{website_root}/government/collections/north-sea-shipping-lanes",
           "public_updated_at" => "2014-10-16T10:31:28+01:00",
           "title" => "North Sea shipping lanes" })
     end
