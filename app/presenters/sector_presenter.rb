@@ -1,6 +1,7 @@
 require "config/initializers/services"
 require "app/models/sector_content"
 require "app/models/curated_sector"
+require "app/models/latest_changes"
 
 class SectorPresenter
   def initialize(slug)
@@ -8,7 +9,7 @@ class SectorPresenter
   end
 
   def empty?
-    sector_content.nil?
+    no_sector_content? && no_latest_changes?
   end
 
   def to_hash
@@ -19,7 +20,8 @@ class SectorPresenter
         title: sector_content.title,
         parent: sector_content.parent,
         details: {
-          groups: groups
+          groups: groups,
+          documents: documents
         }
       }
     end
@@ -37,6 +39,33 @@ private
 
   def curated_sector
     @curated_sector ||= CuratedSector.find(@slug)
+  end
+
+  def latest_changes_content
+    @latest_changes_content ||= LatestChanges.find(@slug)
+  end
+
+  def no_latest_changes?
+    latest_changes_content.nil? || latest_changes_content.results.empty?
+  end
+
+  def no_sector_content?
+    sector_content.nil?
+  end
+
+  def documents
+    latest_changes_content.results.map do |result|
+      {
+        latest_change_note: result[:latest_change_note],
+        link: full_url(result[:link]),
+        public_updated_at: result[:public_timestamp],
+        title: result[:title],
+      }
+    end
+  end
+
+  def full_url(link)
+    Plek.new.website_root+link
   end
 
   def groups
