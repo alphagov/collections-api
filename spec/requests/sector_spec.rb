@@ -140,6 +140,8 @@ RSpec.describe "Requests for specialist sectors", type: :request do
       body = JSON.parse(response.body)
 
       expect(response.status).to eq(200)
+      expect(body['details']['documents_start']).to eq(50)
+      expect(body['details']['documents_total']).to eq(100)
     end
   end
 

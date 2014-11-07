@@ -73,7 +73,9 @@ RSpec.describe SectorPresenter, type: :model do
               public_updated_at: "2014-10-16T10:31:28+01:00",
               title: "North Sea shipping lanes",
             }
-          ]
+          ],
+          documents_start: 0,
+          documents_total: 0,
         }
       )
     end
@@ -143,7 +145,9 @@ RSpec.describe SectorPresenter, type: :model do
               public_updated_at: "2014-10-16T10:31:28+01:00",
               title: "North Sea shipping lanes",
             }
-          ]
+          ],
+          documents_start: 0,
+          documents_total: 0,
         }
       })
     end
@@ -157,6 +161,8 @@ RSpec.describe SectorPresenter, type: :model do
       presenter = SectorPresenter.new("oil-and-gas/offshore", start: 10)
       output = presenter.to_hash
 
+      expect(output[:details][:documents_start]).to eq(10)
+      expect(output[:details][:documents_total]).to eq(100)
     end
   end
 
@@ -214,7 +220,9 @@ RSpec.describe SectorPresenter, type: :model do
               public_updated_at: "2014-10-16T10:31:28+01:00",
               title: "North Sea shipping lanes",
             }
-          ]
+          ],
+          documents_start: 0,
+          documents_total: 0,
         }
       })
     end

@@ -22,7 +22,9 @@ class SectorPresenter
         parent: sector_content.parent,
         details: {
           groups: groups,
-          documents: documents
+          documents: documents,
+          documents_start: latest_changes_content.start,
+          documents_total: latest_changes_content.total,
         }
       }
     end
