@@ -131,6 +131,16 @@ RSpec.describe "Requests for specialist sectors", type: :request do
           "public_updated_at" => "2014-10-16T10:31:28+01:00",
           "title" => "North Sea shipping lanes" })
     end
+
+    it 'accepts the "start" parameter' do
+      stub_rummager_with_paginated_content(start: 50, total: 100)
+
+      get_specialist_sector 'oil-and-gas/offshore?start=50'
+
+      body = JSON.parse(response.body)
+
+      expect(response.status).to eq(200)
+    end
   end
 
   def get_specialist_sector(slug)

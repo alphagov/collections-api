@@ -147,6 +147,17 @@ RSpec.describe SectorPresenter, type: :model do
         }
       })
     end
+
+    it 'passes the start value to the LatestChanges instance' do
+      mock_latest_changes = double('LatestChanges', start: 10, total: 100, results: [])
+      expect(LatestChanges).to receive(:find)
+                                .with('oil-and-gas/offshore', start: 10)
+                                .and_return(mock_latest_changes)
+
+      presenter = SectorPresenter.new("oil-and-gas/offshore", start: 10)
+      output = presenter.to_hash
+
+    end
   end
 
   context "when the sector is present and curated" do
