@@ -123,5 +123,62 @@ RSpec.describe LatestChanges, type: :model do
         LatestChanges.find(slug, start: -10)
       end
     end
+
+    context 'count value' do
+      it 'passes the count value into the rummager query' do
+        rummager = double("rummager")
+        CollectionsAPI.services(:rummager, rummager)
+
+        expect(rummager).to receive(:unified_search).with(
+          base_rummager_query.merge(count: '20')
+        )
+
+        LatestChanges.find(slug, count: 20)
+      end
+
+      it 'uses the default count value when nil' do
+        rummager = double("rummager")
+        CollectionsAPI.services(:rummager, rummager)
+
+        expect(rummager).to receive(:unified_search).with(
+          base_rummager_query.merge(count: '50')
+        )
+
+        LatestChanges.find(slug, count: nil)
+      end
+
+      it 'uses the default count value when a blank string' do
+        rummager = double("rummager")
+        CollectionsAPI.services(:rummager, rummager)
+
+        expect(rummager).to receive(:unified_search).with(
+          base_rummager_query.merge(count: '50')
+        )
+
+        LatestChanges.find(slug, count: '')
+      end
+
+      it 'uses the default count value when less than zero' do
+        rummager = double("rummager")
+        CollectionsAPI.services(:rummager, rummager)
+
+        expect(rummager).to receive(:unified_search).with(
+          base_rummager_query.merge(count: '50')
+        )
+
+        LatestChanges.find(slug, count: -10)
+      end
+
+      it 'limits the count value to the maximum' do
+        rummager = double("rummager")
+        CollectionsAPI.services(:rummager, rummager)
+
+        expect(rummager).to receive(:unified_search).with(
+          base_rummager_query.merge(count: '100')
+        )
+
+        LatestChanges.find(slug, count: 1000)
+      end
+    end
   end
 end

@@ -1,6 +1,9 @@
 require "active_support/core_ext/hash/indifferent_access"
 
 class LatestChanges
+  DEFAULT_RESULTS_PER_PAGE = 50
+  MAX_RESULTS_PER_PAGE = 100
+
   def self.find(slug, search_query_opts={})
     search_client = CollectionsAPI.services(:rummager)
     search_query = build_search_query_for(slug, search_query_opts)
@@ -14,7 +17,7 @@ class LatestChanges
 
   def self.build_search_query_for(slug, options)
     {
-     count: "50",
+     count: valid_count_value(options).to_s,
      start: valid_start_value(options).to_s,
      filter_specialist_sectors: [slug],
      order: "-public_timestamp",
@@ -45,5 +48,16 @@ private
     else
       0
     end
+  end
+
+  def self.valid_count_value(options)
+    count = options[:count]
+    count = count.nil? ? 0 : count.to_i
+    if count <= 0
+      count = DEFAULT_RESULTS_PER_PAGE
+    elsif count > MAX_RESULTS_PER_PAGE
+      count = MAX_RESULTS_PER_PAGE
+    end
+    count
   end
 end

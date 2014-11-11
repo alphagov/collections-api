@@ -29,7 +29,7 @@ module RummagerHelpers
     rummager = CollectionsAPI.services(:rummager, rummager_double)
   end
 
-  def stub_rummager_with_paginated_content(start:, total:)
+  def stub_rummager_with_paginated_content(start:, total:, count:)
     rummager_response = {
       'results' => [
         stub_rummager_result
@@ -40,7 +40,7 @@ module RummagerHelpers
 
     rummager_double = double('rummager')
     expect(rummager_double).to receive(:unified_search).with(
-      hash_including(start: start.to_s)
+      hash_including(start: start.to_s, count: count.to_s)
     ).and_return(rummager_response)
 
     rummager = CollectionsAPI.services(:rummager, rummager_double)

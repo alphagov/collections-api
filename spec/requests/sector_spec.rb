@@ -132,10 +132,10 @@ RSpec.describe "Requests for specialist sectors", type: :request do
           "title" => "North Sea shipping lanes" })
     end
 
-    it 'accepts the "start" parameter' do
-      stub_rummager_with_paginated_content(start: 50, total: 100)
+    it 'accepts the "start" and "count" parameters' do
+      stub_rummager_with_paginated_content(start: 50, count: 25, total: 100)
 
-      get_specialist_sector 'oil-and-gas/offshore?start=50'
+      get_specialist_sector 'oil-and-gas/offshore?start=50&count=25'
 
       body = JSON.parse(response.body)
 

@@ -152,13 +152,13 @@ RSpec.describe SectorPresenter, type: :model do
       })
     end
 
-    it 'passes the start value to the LatestChanges instance' do
+    it 'passes the start and count values to the LatestChanges instance' do
       mock_latest_changes = double('LatestChanges', start: 10, total: 100, results: [])
       expect(LatestChanges).to receive(:find)
-                                .with('oil-and-gas/offshore', start: 10)
+                                .with('oil-and-gas/offshore', start: 10, count: 50)
                                 .and_return(mock_latest_changes)
 
-      presenter = SectorPresenter.new("oil-and-gas/offshore", start: 10)
+      presenter = SectorPresenter.new("oil-and-gas/offshore", start: 10, count: 50)
       output = presenter.to_hash
 
       expect(output[:details][:documents_start]).to eq(10)

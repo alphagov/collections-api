@@ -47,7 +47,10 @@ private
   end
 
   def latest_changes_content
-    @latest_changes_content ||= LatestChanges.find(@slug, start: options[:start])
+    @latest_changes_content ||= LatestChanges.find(@slug,
+                                  start: options[:start],
+                                  count: options[:count],
+                                )
   end
 
   def no_latest_changes?
