@@ -4,8 +4,9 @@ require "app/models/curated_sector"
 require "app/models/latest_changes"
 
 class SectorPresenter
-  def initialize(slug)
+  def initialize(slug, options = {})
     @slug = slug
+    @options = options
   end
 
   def empty?
@@ -21,7 +22,9 @@ class SectorPresenter
         parent: sector_content.parent,
         details: {
           groups: groups,
-          documents: documents
+          documents: documents,
+          documents_start: latest_changes_content.start,
+          documents_total: latest_changes_content.total,
         }
       }
     end
@@ -33,6 +36,8 @@ class SectorPresenter
 
 private
 
+  attr_reader :options
+
   def sector_content
     @sector_content ||= SectorContent.find(@slug)
   end
@@ -42,7 +47,10 @@ private
   end
 
   def latest_changes_content
-    @latest_changes_content ||= LatestChanges.find(@slug)
+    @latest_changes_content ||= LatestChanges.find(@slug,
+                                  start: options[:start],
+                                  count: options[:count],
+                                )
   end
 
   def no_latest_changes?
