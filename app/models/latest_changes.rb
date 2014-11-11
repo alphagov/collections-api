@@ -15,7 +15,7 @@ class LatestChanges
   def self.build_search_query_for(slug, options)
     {
      count: "50",
-     start: options.fetch(:start, 0).to_s,
+     start: valid_start_value(options).to_s,
      filter_specialist_sectors: [slug],
      order: "-public_timestamp",
      fields: %w(title link latest_change_note public_timestamp)
@@ -36,5 +36,14 @@ class LatestChanges
 
   def total
     @contents['total'].to_i
+  end
+
+private
+  def self.valid_start_value(options)
+    if options[:start] && options[:start].to_i > 0
+      options[:start].to_i
+    else
+      0
+    end
   end
 end

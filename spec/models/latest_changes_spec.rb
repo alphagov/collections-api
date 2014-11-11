@@ -78,15 +78,50 @@ RSpec.describe LatestChanges, type: :model do
       LatestChanges.find(slug)
     end
 
-    it "passes the starting value into the rummager query" do
-      rummager = double("rummager")
-      CollectionsAPI.services(:rummager, rummager)
+    context 'start value' do
+      it "passes the starting value into the rummager query" do
+        rummager = double("rummager")
+        CollectionsAPI.services(:rummager, rummager)
 
-      expect(rummager).to receive(:unified_search).with(
-        base_rummager_query.merge(start: '10')
-      )
+        expect(rummager).to receive(:unified_search).with(
+          base_rummager_query.merge(start: '10')
+        )
 
-      LatestChanges.find(slug, start: 10)
+        LatestChanges.find(slug, start: 10)
+      end
+
+      it 'defaults to zero given a nil value' do
+        rummager = double("rummager")
+        CollectionsAPI.services(:rummager, rummager)
+
+        expect(rummager).to receive(:unified_search).with(
+          base_rummager_query.merge(start: '0')
+        )
+
+        LatestChanges.find(slug, start: nil)
+      end
+
+      it 'defaults to zero given a blank string' do
+        rummager = double("rummager")
+        CollectionsAPI.services(:rummager, rummager)
+
+        expect(rummager).to receive(:unified_search).with(
+          base_rummager_query.merge(start: '0')
+        )
+
+        LatestChanges.find(slug, start: '')
+      end
+
+      it 'defaults to zero given a negative number' do
+        rummager = double("rummager")
+        CollectionsAPI.services(:rummager, rummager)
+
+        expect(rummager).to receive(:unified_search).with(
+          base_rummager_query.merge(start: '0')
+        )
+
+        LatestChanges.find(slug, start: -10)
+      end
     end
   end
 end
