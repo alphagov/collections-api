@@ -91,7 +91,7 @@ RSpec.describe SectorPresenter, type: :model do
     end
   end
 
-  context "with changed documnets" do
+  context "with changed documents" do
     before do
       stub_content_api_with_content
       stub_content_store_with_content
