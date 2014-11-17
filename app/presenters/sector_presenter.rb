@@ -77,7 +77,7 @@ private
   end
 
   def groups
-    if curated_sector
+    if curated_sector && curated_groups_with_content?
       filtered_groups
     else
       a_to_z_group
@@ -102,8 +102,12 @@ private
     ]
   end
 
+  def curated_groups_with_content?
+    filtered_groups.map { |g| g[:name] } != ["Other"]
+  end
+
   def filtered_groups
-    inflated_groups.reject do |group|
+    @filtered_groups ||= inflated_groups.reject do |group|
       group[:contents].empty?
     end
   end
