@@ -12,43 +12,70 @@ module ContentStoreHelpers
   end
 
   def stub_content_store_with_content
-    allow(CollectionsAPI.services(:content_store)).to receive(:content_item).with("/oil-and-gas/offshore").and_return({
-      "base_path" => "/oil-and-gas/offshore",
-      "title" => "Offshore",
-      "description" => "Important information about offshore drilling",
+    stub_content_store_with("/oil-and-gas/offshore", {
+      title: "Offshore",
+      description: "Important information about offshore drilling",
+      groups: [
+        {
+          "name" => "Oil rigs",
+          "contents" => [
+            "http://example.com/api/oil-rig-safety-requirements.json",
+            "http://example.com/api/oil-rig-staffing.json"
+          ]
+        },
+        {
+          "name" => "Piping",
+          "contents" => [
+            "http://example.com/api/undersea-piping-restrictions.json",
+            "http://example.com/api/an-untagged-document-about-oil.json"
+          ]
+        },
+        {
+          "name" => "A group with only untagged content",
+          "contents" => [
+            "http://example.com/api/an-untagged-document-about-oil.json"
+          ]
+        },
+        {
+          "name" => "Other",
+          "contents" => [
+            "http://example.com/api/north-sea-shipping-lanes.json"
+          ]
+        }
+      ]
+    })
+  end
+
+  def stub_content_store_with_content_but_no_groups
+    stub_content_store_with("/oil-and-gas/offshore", {
+      title: "Offshore",
+      description: "Important information about offshore drilling",
+      groups: [
+        {
+          "name" => "Other",
+          "contents" => [
+            "http://example.com/api/oil-rig-safety-requirements.json",
+            "http://example.com/api/oil-rig-staffing.json",
+            "http://example.com/api/undersea-piping-restrictions.json",
+            "http://example.com/api/an-untagged-document-about-oil.json",
+            "http://example.com/api/north-sea-shipping-lanes.json"
+          ]
+        }
+      ]
+    })
+  end
+
+  def stub_content_store_with(base_path, options = {})
+    allow(CollectionsAPI.services(:content_store)).to receive(:content_item).with(base_path).and_return({
+      "base_path" => base_path,
+      "title" => options[:title],
+      "description" => options[:description],
       "format" => "specialist_sector",
       "need_ids" => [],
       "public_updated_at"=> "2014-03-04T13:58:11+00:00",
       "updated_at" => "2014-03-04T14:15:17+00:00",
       "details" => {
-        "groups" => [
-          {
-            "name" => "Oil rigs",
-            "contents" => [
-              "http://example.com/api/oil-rig-safety-requirements.json",
-              "http://example.com/api/oil-rig-staffing.json"
-            ]
-          },
-          {
-            "name" => "Piping",
-            "contents" => [
-              "http://example.com/api/undersea-piping-restrictions.json",
-              "http://example.com/api/an-untagged-document-about-oil.json"
-            ]
-          },
-          {
-            "name" => "A group with only untagged content",
-            "contents" => [
-              "http://example.com/api/an-untagged-document-about-oil.json"
-            ]
-          },
-          {
-            "name" => "Other",
-            "contents" => [
-              "http://example.com/api/north-sea-shipping-lanes.json"
-            ]
-          }
-        ]
+        "groups" => options[:groups]
       }
     })
   end
