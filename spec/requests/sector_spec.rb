@@ -194,6 +194,29 @@ RSpec.describe "Requests for specialist sectors", type: :request do
         ]
       )
     end
+
+    it "excludes content with a format of world_location_news_article" do
+      content_api_has_artefacts_with_a_tag(
+        "specialist_sector",
+        "oil-and-gas/offshore",
+        ["a-world-location-news-article"],
+        artefact: { format: "world_location_news_article" }
+      )
+
+      get_specialist_sector "oil-and-gas/offshore"
+
+      expect(JSON.parse(response.body)["details"]).not_to include(
+        "groups" => [
+          "name" => "A to Z",
+          "contents" => [
+            {
+              "title" => "A world location news article",
+              "web_url" => "http://frontend.test.gov.uk/a-world-location-news-article"
+            },
+          ]
+        ]
+      )
+    end
   end
 
   context "with a curated sector" do

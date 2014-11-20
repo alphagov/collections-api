@@ -16,6 +16,7 @@ class SectorPresenter
     press_release
     speech
     statement
+    world_location_news_article
   ).to_set
 
   def empty?
