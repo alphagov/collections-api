@@ -7,7 +7,7 @@ gem 'jbuilder', '~> 2.0'
 gem 'plek', '1.8.1'
 gem 'airbrake', '4.0.0'
 
-gem 'gds-api-adapters', '14.3.0'
+gem 'gds-api-adapters', '16.3.4'
 
 gem 'decent_exposure', '2.3.2'
 
