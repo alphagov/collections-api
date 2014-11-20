@@ -56,6 +56,167 @@ RSpec.describe "Requests for specialist sectors", type: :request do
         "title" => "Oil and gas"
       )
     end
+
+    it "excludes content with a format of news_story" do
+      content_api_has_artefacts_with_a_tag(
+        "specialist_sector",
+        "oil-and-gas/offshore",
+        ["a-news-story"],
+        artefact: { format: "news_story" }
+      )
+
+      get_specialist_sector "oil-and-gas/offshore"
+
+      expect(JSON.parse(response.body)["details"]).not_to include(
+        "groups" => [
+          "name" => "A to Z",
+          "contents" => [
+            {
+              "title" => "A news story",
+              "web_url" => "http://frontend.test.gov.uk/a-news-story"
+            },
+          ]
+        ]
+      )
+    end
+
+    it "excludes content with a format of press_release" do
+      content_api_has_artefacts_with_a_tag(
+        "specialist_sector",
+        "oil-and-gas/offshore",
+        ["a-press-release"],
+        artefact: { format: "press_release" }
+      )
+
+      get_specialist_sector "oil-and-gas/offshore"
+
+      expect(JSON.parse(response.body)["details"]).not_to include(
+        "groups" => [
+          "name" => "A to Z",
+          "contents" => [
+            {
+              "title" => "A press release",
+              "web_url" => "http://frontend.test.gov.uk/a-press-release"
+            },
+          ]
+        ]
+      )
+    end
+
+    it "excludes content with a format of speech" do
+      content_api_has_artefacts_with_a_tag(
+        "specialist_sector",
+        "oil-and-gas/offshore",
+        ["a-speech"],
+        artefact: { format: "speech" }
+      )
+
+      get_specialist_sector "oil-and-gas/offshore"
+
+      expect(JSON.parse(response.body)["details"]).not_to include(
+        "groups" => [
+          "name" => "A to Z",
+          "contents" => [
+            {
+              "title" => "A speech",
+              "web_url" => "http://frontend.test.gov.uk/a-speech"
+            },
+          ]
+        ]
+      )
+    end
+
+    it "excludes content with a format of statement" do
+      content_api_has_artefacts_with_a_tag(
+        "specialist_sector",
+        "oil-and-gas/offshore",
+        ["a-statement"],
+        artefact: { format: "statement" }
+      )
+
+      get_specialist_sector "oil-and-gas/offshore"
+
+      expect(JSON.parse(response.body)["details"]).not_to include(
+        "groups" => [
+          "name" => "A to Z",
+          "contents" => [
+            {
+              "title" => "A statement",
+              "web_url" => "http://frontend.test.gov.uk/a-statement"
+            },
+          ]
+        ]
+      )
+    end
+
+    it "excludes content with a format of government_response" do
+      content_api_has_artefacts_with_a_tag(
+        "specialist_sector",
+        "oil-and-gas/offshore",
+        ["a-government-response"],
+        artefact: { format: "government_response" }
+      )
+
+      get_specialist_sector "oil-and-gas/offshore"
+
+      expect(JSON.parse(response.body)["details"]).not_to include(
+        "groups" => [
+          "name" => "A to Z",
+          "contents" => [
+            {
+              "title" => "A government response",
+              "web_url" => "http://frontend.test.gov.uk/a-government-response"
+            },
+          ]
+        ]
+      )
+    end
+
+    it "excludes content with a format of government_response" do
+      content_api_has_artefacts_with_a_tag(
+        "specialist_sector",
+        "oil-and-gas/offshore",
+        ["a-fatality-notice"],
+        artefact: { format: "fatality_notice" }
+      )
+
+      get_specialist_sector "oil-and-gas/offshore"
+
+      expect(JSON.parse(response.body)["details"]).not_to include(
+        "groups" => [
+          "name" => "A to Z",
+          "contents" => [
+            {
+              "title" => "A fatality notice",
+              "web_url" => "http://frontend.test.gov.uk/a-fatality-notice"
+            },
+          ]
+        ]
+      )
+    end
+
+    it "excludes content with a format of world_location_news_article" do
+      content_api_has_artefacts_with_a_tag(
+        "specialist_sector",
+        "oil-and-gas/offshore",
+        ["a-world-location-news-article"],
+        artefact: { format: "world_location_news_article" }
+      )
+
+      get_specialist_sector "oil-and-gas/offshore"
+
+      expect(JSON.parse(response.body)["details"]).not_to include(
+        "groups" => [
+          "name" => "A to Z",
+          "contents" => [
+            {
+              "title" => "A world location news article",
+              "web_url" => "http://frontend.test.gov.uk/a-world-location-news-article"
+            },
+          ]
+        ]
+      )
+    end
   end
 
   context "with a curated sector" do

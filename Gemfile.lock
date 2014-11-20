@@ -60,7 +60,7 @@ GEM
     factory_girl_rails (4.4.1)
       factory_girl (~> 4.4.0)
       railties (>= 3.0.0)
-    gds-api-adapters (14.3.0)
+    gds-api-adapters (16.3.4)
       link_header
       lrucache (~> 0.1.1)
       null_logger
@@ -109,7 +109,7 @@ GEM
       thor (>= 0.18.1, < 2.0)
     raindrops (0.13.0)
     rake (10.3.2)
-    rdoc (4.1.1)
+    rdoc (4.1.2)
       json (~> 1.4)
     rest-client (1.6.8)
       mime-types (~> 1.16)
@@ -166,7 +166,7 @@ DEPENDENCIES
   capistrano-rails
   decent_exposure (= 2.3.2)
   factory_girl_rails
-  gds-api-adapters (= 14.3.0)
+  gds-api-adapters (= 16.3.4)
   jbuilder (~> 2.0)
   plek (= 1.8.1)
   rails (= 4.1.8)

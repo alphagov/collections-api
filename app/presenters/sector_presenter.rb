@@ -9,6 +9,16 @@ class SectorPresenter
     @options = options
   end
 
+  FORMATS_TO_EXCLUDE = %w(
+    fatality_notice
+    government_response
+    news_story
+    press_release
+    speech
+    statement
+    world_location_news_article
+  ).to_set
+
   def empty?
     no_sector_content? && no_latest_changes?
   end
@@ -85,7 +95,11 @@ private
   end
 
   def ordered_contents
-    sector_content.results.sort_by {|r| r[:title] }
+    filtered_contents.sort_by { |r| r[:title] }
+  end
+
+  def filtered_contents
+    sector_content.results.reject { |result| FORMATS_TO_EXCLUDE.include? result[:format] }
   end
 
   def a_to_z_group
