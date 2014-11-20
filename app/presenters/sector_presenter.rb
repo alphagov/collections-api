@@ -98,9 +98,7 @@ private
   end
 
   def filtered_contents
-    sector_content.results.each_with_object([]) do |result, array|
-      array << result unless FORMATS_TO_EXCLUDE.include? result[:format]
-    end
+    sector_content.results.reject { |result| FORMATS_TO_EXCLUDE.include? result[:format] }
   end
 
   def a_to_z_group
