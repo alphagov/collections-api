@@ -117,7 +117,7 @@ private
   end
 
   def curated_groups_with_content?
-    filtered_groups.map { |g| g[:name] } != ["Other"]
+    filtered_groups.any? && filtered_groups.map { |g| g[:name] } != ["Other"]
   end
 
   def filtered_groups

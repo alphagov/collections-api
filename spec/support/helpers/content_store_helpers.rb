@@ -46,6 +46,14 @@ module ContentStoreHelpers
     })
   end
 
+  def stub_content_store_with_content_but_empty_groups
+    stub_content_store_with("/oil-and-gas/offshore", {
+      title: "Offshore",
+      description: "Important information about offshore drilling",
+      groups: [],
+    })
+  end
+
   def stub_content_store_with_content_but_no_groups
     stub_content_store_with("/oil-and-gas/offshore", {
       title: "Offshore",
