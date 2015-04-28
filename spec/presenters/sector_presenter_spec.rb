@@ -260,11 +260,12 @@ RSpec.describe SectorPresenter, type: :model do
   context "when the sector is present and curated with no groups" do
     before do
       stub_content_api_with_content
-      stub_content_store_with_content_but_no_groups
       stub_rummager_with_content
     end
 
     it "returns A to Z content" do
+      stub_content_store_with_content_but_no_groups
+
       presenter = SectorPresenter.new("oil-and-gas/offshore")
 
       expect(presenter).not_to be_empty
@@ -291,6 +292,38 @@ RSpec.describe SectorPresenter, type: :model do
           ]
         }
       ])
+    end
+
+    it "returns A to Z content with empty groups in content-store" do
+      stub_content_store_with_content_but_empty_groups
+
+      presenter = SectorPresenter.new("oil-and-gas/offshore")
+
+      expect(presenter).not_to be_empty
+      expect(presenter.to_hash[:details][:groups]).to eq([
+        {
+          name: "A to Z",
+          contents: [
+            {
+              title: "North Sea shipping lanes",
+              web_url: "https://www.example.com/north-sea-shipping-lanes"
+            },
+            {
+              title: "Oil rig safety requirements",
+              web_url: "https://www.example.com/oil-rig-safety-requirements"
+            },
+            {
+              title: "Oil rig staffing",
+              web_url: "https://www.example.com/oil-rig-staffing"
+            },
+            {
+              title: "Undersea piping restrictions",
+              web_url: "https://www.example.com/undersea-piping-restrictions"
+            }
+          ]
+        }
+      ])
+
     end
   end
 
