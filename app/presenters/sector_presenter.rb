@@ -31,6 +31,7 @@ class SectorPresenter
         title: sector_content.title,
         parent: sector_content.parent,
         details: {
+          beta: beta,
           groups: groups,
           documents: documents,
           documents_start: latest_changes_content.start,
@@ -48,10 +49,12 @@ private
 
   attr_reader :options
 
+  # Represents the content coming from *Content API*
   def sector_content
     @sector_content ||= SectorContent.find(@slug)
   end
 
+  # Represents the content coming from *Content Store*
   def curated_sector
     @curated_sector ||= CuratedSector.find(@slug)
   end
@@ -84,6 +87,12 @@ private
 
   def full_url(link)
     Plek.new.website_root+link
+  end
+
+  def beta
+    if curated_sector
+      curated_sector.details[:beta]
+    end || false
   end
 
   def groups
