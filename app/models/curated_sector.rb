@@ -29,6 +29,10 @@ class CuratedSector
   end
 
   def groups
-    @content_item["details"].with_indifferent_access[:groups]
+    details[:groups]
+  end
+
+  def details
+    @content_item["details"].with_indifferent_access
   end
 end

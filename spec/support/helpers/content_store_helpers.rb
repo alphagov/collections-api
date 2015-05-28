@@ -16,6 +16,7 @@ module ContentStoreHelpers
       title: "Offshore",
       description: "Important information about offshore drilling",
       details: {
+        beta: true,
         groups: [
           {
             "name" => "Oil rigs",

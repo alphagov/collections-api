@@ -31,6 +31,7 @@ RSpec.describe SectorPresenter, type: :model do
   end
 
   context "when only the sector is present" do
+    # There is only data coming from content-api, not content-store.
     before do
       stub_content_api_with_content
       stub_rummager_with_content
@@ -43,6 +44,7 @@ RSpec.describe SectorPresenter, type: :model do
       expect(presenter.to_hash).to include(
         title: "Offshore",
         details: {
+          beta: false, # Topics without a content-store entry are never in beta.
           groups: [
             {
               name: "A to Z",
@@ -105,6 +107,7 @@ RSpec.describe SectorPresenter, type: :model do
       expect(presenter.to_hash).to include({
         title: "Offshore",
         details: {
+          beta: true, # Beta flag is set in content store.
           groups: [
             {
               name: "Oil rigs",
@@ -180,6 +183,7 @@ RSpec.describe SectorPresenter, type: :model do
       expect(presenter.to_hash).to include({
         title: "Offshore",
         details: {
+          beta: true, # Beta flag is set in content store.
           groups: [
             {
               name: "Oil rigs",
