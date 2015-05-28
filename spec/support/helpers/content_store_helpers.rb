@@ -15,34 +15,36 @@ module ContentStoreHelpers
     stub_content_store_with("/oil-and-gas/offshore", {
       title: "Offshore",
       description: "Important information about offshore drilling",
-      groups: [
-        {
-          "name" => "Oil rigs",
-          "contents" => [
-            "http://example.com/api/oil-rig-safety-requirements.json",
-            "http://example.com/api/oil-rig-staffing.json"
-          ]
-        },
-        {
-          "name" => "Piping",
-          "contents" => [
-            "http://example.com/api/undersea-piping-restrictions.json",
-            "http://example.com/api/an-untagged-document-about-oil.json"
-          ]
-        },
-        {
-          "name" => "A group with only untagged content",
-          "contents" => [
-            "http://example.com/api/an-untagged-document-about-oil.json"
-          ]
-        },
-        {
-          "name" => "Other",
-          "contents" => [
-            "http://example.com/api/north-sea-shipping-lanes.json"
-          ]
-        }
-      ]
+      details: {
+        groups: [
+          {
+            "name" => "Oil rigs",
+            "contents" => [
+              "http://example.com/api/oil-rig-safety-requirements.json",
+              "http://example.com/api/oil-rig-staffing.json"
+            ]
+          },
+          {
+            "name" => "Piping",
+            "contents" => [
+              "http://example.com/api/undersea-piping-restrictions.json",
+              "http://example.com/api/an-untagged-document-about-oil.json"
+            ]
+          },
+          {
+            "name" => "A group with only untagged content",
+            "contents" => [
+              "http://example.com/api/an-untagged-document-about-oil.json"
+            ]
+          },
+          {
+            "name" => "Other",
+            "contents" => [
+              "http://example.com/api/north-sea-shipping-lanes.json"
+            ]
+          }
+        ]
+      }
     })
   end
 
@@ -50,7 +52,9 @@ module ContentStoreHelpers
     stub_content_store_with("/oil-and-gas/offshore", {
       title: "Offshore",
       description: "Important information about offshore drilling",
-      groups: [],
+      details: {
+        groups: [],
+      }
     })
   end
 
@@ -58,18 +62,20 @@ module ContentStoreHelpers
     stub_content_store_with("/oil-and-gas/offshore", {
       title: "Offshore",
       description: "Important information about offshore drilling",
-      groups: [
-        {
-          "name" => "Other",
-          "contents" => [
-            "http://example.com/api/oil-rig-safety-requirements.json",
-            "http://example.com/api/oil-rig-staffing.json",
-            "http://example.com/api/undersea-piping-restrictions.json",
-            "http://example.com/api/an-untagged-document-about-oil.json",
-            "http://example.com/api/north-sea-shipping-lanes.json"
-          ]
-        }
-      ]
+      details: {
+        groups: [
+          {
+            "name" => "Other",
+            "contents" => [
+              "http://example.com/api/oil-rig-safety-requirements.json",
+              "http://example.com/api/oil-rig-staffing.json",
+              "http://example.com/api/undersea-piping-restrictions.json",
+              "http://example.com/api/an-untagged-document-about-oil.json",
+              "http://example.com/api/north-sea-shipping-lanes.json"
+            ]
+          }
+        ]
+      }
     })
   end
 
@@ -82,9 +88,7 @@ module ContentStoreHelpers
       "need_ids" => [],
       "public_updated_at"=> "2014-03-04T13:58:11+00:00",
       "updated_at" => "2014-03-04T14:15:17+00:00",
-      "details" => {
-        "groups" => options[:groups]
-      }
+      "details" => options[:details]
     })
   end
 end
