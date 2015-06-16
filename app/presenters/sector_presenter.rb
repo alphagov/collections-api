@@ -145,8 +145,9 @@ private
   end
 
   def find_content(api_url)
+    api_path = URI(api_url).path
     sector_content.results.find do |content|
-      content[:id] == api_url
+      URI(content[:id]).path == api_path
     end
   end
 
